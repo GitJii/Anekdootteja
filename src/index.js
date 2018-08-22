@@ -22,11 +22,11 @@ class App extends React.Component {
       <div>
         <div>
           {this.props.anecdotes[this.state.selected]}
-          <p>{console.log(this.state.selected)}</p>
 
           <Button handleClick={this.seuraavaAnekdootti()}
             text="nextAnecdote"
           ></Button>
+
         </div>
       </div>
     )
