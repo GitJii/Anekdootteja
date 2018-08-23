@@ -5,7 +5,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 0
+      selected: 0,
+      anekdoottienPisteet: [0, 0, 0, 0, 0, 0],
     }
   }
 
@@ -17,16 +18,40 @@ class App extends React.Component {
     }
   }
 
+  paivitaPisteet = (tila) => {
+    const kopio = [...tila.anekdoottienPisteet]
+    return () => {
+      
+      kopio[tila.selected] += 1
+    
+      this.setState({
+        anekdoottienPisteet: kopio
+      })
+
+    }
+  }
+
   render() {
     return (
       <div>
         <div>
-          {this.props.anecdotes[this.state.selected]}
+          <div>
+            {this.props.anecdotes[this.state.selected]}
+          </div>
+          
+          <div>
+            this anecdote has {this.state.anekdoottienPisteet[this.state.selected]} votes
+          </div>
+          
+          <div>
+            <Button handleClick={this.seuraavaAnekdootti()}
+              text="next anecdote"
+            ></Button>
 
-          <Button handleClick={this.seuraavaAnekdootti()}
-            text="nextAnecdote"
-          ></Button>
-
+            <Button handleClick={this.paivitaPisteet(this.state)}
+              text="vote"
+            ></Button>
+          </div>
         </div>
       </div>
     )
