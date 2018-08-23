@@ -21,14 +21,35 @@ class App extends React.Component {
   paivitaPisteet = (tila) => {
     const kopio = [...tila.anekdoottienPisteet]
     return () => {
-      
+
       kopio[tila.selected] += 1
-    
+
       this.setState({
         anekdoottienPisteet: kopio
       })
-
     }
+  }
+
+    const kopio2 = [...this.state.anekdoottienPisteet]
+
+    kopio2.sort(function (a, b) {
+      return a - b;
+    })
+
+    const suurin = kopio2[kopio2.length - 1]
+
+    const indeksi = this.state.anekdoottienPisteet.findIndex(suurinluku => suurinluku === suurin)
+    const anekdoottiJollaEnitenAania = this.props.anecdotes[indeksi]
+
+    console.log(anekdoottiJollaEnitenAania)
+
+    return (
+      <div>
+        {anekdoottiJollaEnitenAania}
+        <br></br>
+        has {this.state.anekdoottienPisteet[indeksi]} votes
+      </div>
+    )
   }
 
   render() {
@@ -38,26 +59,29 @@ class App extends React.Component {
           <div>
             {this.props.anecdotes[this.state.selected]}
           </div>
-          
-          <div>
-            this anecdote has {this.state.anekdoottienPisteet[this.state.selected]} votes
-          </div>
-          
-          <div>
-            <Button handleClick={this.seuraavaAnekdootti()}
-              text="next anecdote"
-            ></Button>
 
-            <Button handleClick={this.paivitaPisteet(this.state)}
-              text="vote"
-            ></Button>
+          <div>
+            has {this.state.anekdoottienPisteet[this.state.selected]} votes
           </div>
+
+
+          <Button handleClick={this.seuraavaAnekdootti()}
+            text="next anecdote"
+          ></Button>
+
+          <Button handleClick={this.paivitaPisteet(this.state)}
+            text="vote"
+          ></Button>
+
+          <h1>anecdote with most votes</h1>
+
+          {this.enitenAaniaSaanut()}
         </div>
       </div>
     )
   }
-}
 
+}
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
